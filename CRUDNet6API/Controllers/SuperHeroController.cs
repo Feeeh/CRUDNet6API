@@ -47,5 +47,26 @@ namespace CRUDNet6API.Controllers
             heroes.Add(superHero);
             return Ok(heroes);
         }
+
+        [HttpPut("Edit")]
+        public async Task<ActionResult<SuperHero>> Edit(SuperHero superHero)
+        {
+            var hero = heroes.Find(x => x.Id == superHero.Id);
+            if (superHero.Name != "") hero.Name = superHero.Name;
+            if (superHero.FirstName != "") hero.FirstName = superHero.FirstName;
+            if (superHero.LastName != "") hero.LastName = superHero.LastName;
+            if (superHero.Place != "") hero.Place = superHero.Place;
+
+            return Ok(hero);
+        }
+
+        [HttpDelete("Delete/{id}")]
+        public async Task<ActionResult<List<SuperHero>>> Delete(int id)
+        {
+            var hero = heroes.Find(x => x.Id == id);
+            heroes.Remove(hero);
+
+            return Ok(heroes);
+        }
     }
 }
